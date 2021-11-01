@@ -1,0 +1,12 @@
+Integrantes y roles:
+
+Cesar Eduarno Acevedo Rincon - Developer 
+Ines Iaudith Ojeda Borjas - Developer 
+Leonardo Castellanos Peña - Developer - Scrum Master
+Lida Garcia Reyes - Developer - PO
+Richard Mazo Osorio - Developer
+
+Nombre del equipo:
+
+RILEL Developers
+
