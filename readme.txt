@@ -1,3 +1,5 @@
+Nombre del proyecto: IMC app
+
 Vamos a tomar el proyecto propuesto: 
 
 Como parte del programa de salud de la Universidad Autónoma de Bucaramanga, se ha decidido realizar un tamizaje de peso y talla y el correspondiente cálculo del índice de masa corporal a cada persona de la comunidad universitaria, entregando recomendaciones dependiendo del resultado arrojado por la fórmula de índice de masa corporal.
