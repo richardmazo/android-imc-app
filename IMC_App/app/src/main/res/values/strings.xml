@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Salud App</string>
+    <string name="Bienvenido">Bienvenido a Salud APP</string>
+    <string name="IMC">IMC</string>
+    <string name="menu_formulario">Formulario</string>
+    <string name="metalbolismo_basal">Metabolismo basal</string>
+    <string name="ingrese_estatura">Ingrese su estatura en metros</string>
+    <string name="ingrese_peso">Ingrese su peso en Kg</string>
+    <string name="calcular">Calcular</string>
+    <string name="indice_masa_corporal">Su indice de masa corporal es de</string>
+    <string name="indice_masa_corporal_resultado"></string>
+    <string name="ingrese_bien_los_valores">Ingrese los valores correctamente</string>
+    <string name="ingrese_edad">Ingrese la edad</string>
+    <string name="seleccionar_genero">Seleccione su genero</string>
+</resources>
