@@ -12,4 +12,5 @@
     <string name="ingrese_bien_los_valores">Ingrese los valores correctamente</string>
     <string name="ingrese_edad">Ingrese la edad</string>
     <string name="seleccionar_genero">Seleccione su genero</string>
+    <string name="ingrese_nombre">Ingrese su nombre</string>
 </resources>

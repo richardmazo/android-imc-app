@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.richard.imc_app">
+    package="com.rilel.imc_app">
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/images"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/images"
         android:supportsRtl="true"
         android:theme="@style/Theme.IMC_App">
         <activity
-            android:name=".MainActivity"
+            android:name="com.rilel.imc_app.PersonListActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.rilel.imc_app.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

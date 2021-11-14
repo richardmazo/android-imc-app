@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Richa/AndroidStudioProjects/IMC_App/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/Richa/AndroidStudioProjects/IMC_App/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/Richa/AndroidStudioProjects/IMC_App/app/src/main/res/layout/activity_person_list.xml" value="0.1" />
+        <entry key="..\:/Users/Richa/AndroidStudioProjects/IMC_App/app/src/main/res/layout/persona_recycler_adapter.xml" value="0.19010416666666666" />
         <entry key="..\:/Users/Richa/AndroidStudioProjects/IMC_App/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
       </map>
     </option>
