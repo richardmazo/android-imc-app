@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <ImageView
+            android:layout_width="371dp"
+            android:layout_height="118dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/images" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Bienvenido"
+            android:textSize="28sp"
+            android:padding="20dp"
+            android:layout_margin="8dp"
+            android:gravity="center_horizontal"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/idTxtNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ingrese_nombre"/>
+
+            <EditText
+                android:id="@+id/idEditNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text"/>
+
+            <TextView
+                android:id="@+id/idTvPeso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ingrese_peso"/>
+
+            <EditText
+                android:id="@+id/idEtPeso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal"/>
+
+            <TextView
+                android:id="@+id/idTvEstatura"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ingrese_estatura"/>
+
+            <EditText
+                android:id="@+id/idEtEstatura"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal"/>
+
+            <TextView
+                android:id="@+id/idTvEdad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ingrese_edad"/>
+
+            <EditText
+                android:id="@+id/idEtEdad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal"/>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/hombre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hombre" />
+
+                <RadioButton
+                    android:id="@+id/mujer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mujer" />
+
+            </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/idTvIMC"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/IMC"
+                    android:visibility="invisible"
+                    android:background="@color/teal_200"
+                    android:textColor="@color/teal_200"
+                    android:gravity="center_horizontal"
+                    android:textSize="14sp"
+                    android:padding="4dp"
+                    android:layout_margin="4dp"/>
+
+                <TextView
+                    android:id="@+id/idTvMb"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    android:layout_weight="1"
+                    android:text="@string/IMC"
+                    android:background="@color/teal_200"
+                    android:textColor="@color/teal_200"
+                    android:gravity="center_horizontal"
+                    android:textSize="14sp"
+                    android:padding="4dp"
+                    android:layout_margin="4dp" />
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnCalcularIMC"
+                android:layout_width="163dp"
+                android:layout_height="match_parent"
+                android:padding="15dp"
+                android:text="@string/calcular"/>
+
+            <Button
+                android:id="@+id/btnVer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="@string/ver_lista" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

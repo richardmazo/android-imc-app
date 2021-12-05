@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Salud App</string>
+    <string name="Bienvenido">Health App</string>
+    <string name="IMC">BMI</string>
+    <string name="menu_formulario">Form</string>
+    <string name="metalbolismo_basal">Basal metabolism</string>
+    <string name="ingrese_estatura">Enter your height in meters</string>
+    <string name="ingrese_peso">Enter your weight in kilograms</string>
+    <string name="calcular">Calculate</string>
+    <string name="indice_masa_corporal">His body mass index is</string>
+    <string name="ingrese_bien_los_valores">Enter the values ​​correctly</string>
+    <string name="ingrese_edad">Enter age</string>
+    <string name="seleccionar_genero">Select your gender</string>
+    <string name="ingrese_nombre">Please enter your name</string>
+    <string name="no_hay_usuarios_registrados">There are no registered users yet</string>
+    <string name="escriba_el_nombre">Write the name</string>
+    <string name="escriba_el_peso">Write the weight</string>
+    <string name="escriba_la_estatura">Write height</string>
+    <string name="escriba_la_edad">Write the age</string>
+    <string name="seleccione_el_genero">" Select gender"</string>
+    <string name="usuario_registrado">Registered user</string>
+    <string name="hombre">Man</string>
+    <string name="mujer">Woman</string>
+    <string name="metalbolismo_basal_resultado">"Basal metabolism: "</string>
+    <string name="bajo_peso">"Under weight "</string>
+    <string name="normal">Normal</string>
+    <string name="sobrepeso">Overweight</string>
+    <string name="obeso">Obese</string>
+    <string name="imc_resultado">"BMI: "</string>
+    <string name="nombre_resultado">"Name: "</string>
+    <string name="peso_resultado">"Weight: "</string>
+    <string name="estatura_resultado">" Height: "</string>
+    <string name="edad_resultado">" Age: "</string>
+    <string name="genero_resultado">" Gender: "</string>
+    <string name="fecha_registro">"Registration date: "</string>
+    <string name="ver_lista">See list</string>
+    <string name="regresar">To return</string>
+    <string name="indice_masa_corporal_resultado">"His body mass index is: "</string>
+</resources>

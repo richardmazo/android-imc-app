@@ -1,6 +1,7 @@
 package com.rilel.imc_app.adapter;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.rilel.imc_app.R;
 import com.rilel.imc_app.model.Persona;
 import com.rilel.imc_app.viewholder.PersonaViewHolder;
 
@@ -43,7 +45,7 @@ public class PersonaAdapter extends RecyclerView.Adapter<PersonaViewHolder> {
         holder.getTextViewEdad().setText("Edad: " + persona.getEdad()+"");
         holder.getTextViewGenero().setText("Genero: " + persona.getGenero());
         holder.getTextViewImc().setText("IMC: " + persona.getImc()+"");
-        holder.getTextViewMetabolismoBasal().setText("Metabolismo Basal: " + persona.getMetabolismoBasal()+"");
+        holder.getTextViewMetabolismoBasal().setText("Metabolismo basal: " + persona.getMetabolismoBasal()+"");
         holder.getTextViewDate().setText("Fecha registro: " + persona.getFechaRegistro()+"");
     }
 

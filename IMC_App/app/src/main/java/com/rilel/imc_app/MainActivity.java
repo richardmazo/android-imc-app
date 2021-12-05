@@ -4,173 +4,139 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.rilel.imc_app.model.Persona;
+import com.rilel.imc_app.model.Usuario;
+import com.rilel.imc_app.network.IMCAPIClient;
+import com.rilel.imc_app.pojo.Autorizacion;
+import com.rilel.imc_app.repository.IMCRepository;
+
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText editTextPeso, editTextEstatura, editTextEdad, editTextNombre;
-    TextView imcTextVW, mBTextVW;
-    RadioButton rdbHombre, rdbMujer;
-    Button btnCalcularIMC, btnLista;
+    Button btnLogin;
+    EditText editTextEmail, editTextPassword;
+
+    IMCRepository repoIMCAutenticacion;
+
     ArrayList<Persona> personaArray;
-    Double metabolismo_basal, imc;
+    Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        editTextPeso = (EditText) findViewById(R.id.idEtPeso);
-        editTextEstatura = (EditText) findViewById(R.id.idEtEstatura);
-        editTextEdad = (EditText) findViewById(R.id.idEtEdad);
-        editTextNombre = (EditText) findViewById(R.id.idEditNombre);
-        imcTextVW = (TextView) findViewById(R.id.idTvIMC);
-        mBTextVW = (TextView) findViewById(R.id.idTvMb);
-        btnCalcularIMC = (Button) findViewById(R.id.btnCalcularIMC);
-        btnLista= (Button) findViewById(R.id.btnVer);
-        rdbMujer = (RadioButton) findViewById(R.id.mujer);
-        rdbHombre = (RadioButton) findViewById(R.id.hombre);
-        personaArray = new ArrayList<Persona>();
+        editTextEmail = (EditText) findViewById(R.id.txt_email);
+        editTextPassword = (EditText) findViewById(R.id.txt_clave);
+        btnLogin = (Button) findViewById(R.id.btn_login);
 
-        btnCalcularIMC.setOnClickListener(V -> {
+        btnLogin.setOnClickListener(V -> {
             validarCampos();
-        });
-
-        btnLista.setOnClickListener(V -> {
-            listar();
+            validarUsuario();
         });
 
     }
 
-    private void listar() {
+    private void validarUsuario() {
 
-        if (personaArray.isEmpty()) {
-            Toast.makeText(this, "Aún no hay usuarios registrados", Toast.LENGTH_SHORT).show();
-            return;
+        usuario = new Usuario();
+
+        usuario.setUsername(editTextEmail.getText().toString());
+        usuario.setPassword(editTextPassword.getText().toString());
+
+        repoIMCAutenticacion = IMCAPIClient.getInstance().create(IMCRepository.class);
+        Call<Usuario> callIMCAutenticacion = repoIMCAutenticacion.validarUsuario(usuario);
+
+
+        callIMCAutenticacion.enqueue(new Callback<Usuario>() {
+            @Override
+            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                usuario = response.body();
+                Log.d("Logs de Retrofit", "Respuesta con Retrofit, " + usuario.getAccess());
+                Autorizacion autorizacion = new Autorizacion();
+                autorizacion.setAccess(usuario.getAccess());
+                listar();
+            }
+
+            @Override
+            public void onFailure(Call<Usuario> call, Throwable t) {
+                Log.d("Logs de Retrofit", "Respuesta con Retrofit, ERROR ERROR ERROR");
+            }
+        });
+    }
+
+    private void listar() {
+        if(usuario.getRol().equals("comunidad")){
+            Call<ArrayList<Persona>> callReadPersona = repoIMCAutenticacion.readPersonaRegistros(usuario.getId(),usuario.getAccess());
+            callReadPersona.enqueue(new Callback<ArrayList<Persona>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Persona>> call, Response<ArrayList<Persona>> response) {
+                    personaArray = response.body();
+                    Log.d("Logs de Retrofit", "Respuesta con Retrofit, readPersonaRegistros " + personaArray);
+                    listarIMC(personaArray);
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<Persona>> call, Throwable t) {
+                    Log.d("Logs de Retrofit", "Respuesta con Retrofit, ERROR ERROR callIMCAutenticacion");
+                }
+            });
+        }else{
+            if(usuario.getRol().equals("bienestar")){
+                    Call<ArrayList<Persona>> callIMCAutenticacion = repoIMCAutenticacion.readAllPersona(usuario.getAccess());
+                    callIMCAutenticacion.enqueue(new Callback<ArrayList<Persona>>() {
+                        @Override
+                        public void onResponse(Call<ArrayList<Persona>> call, Response<ArrayList<Persona>> response) {
+                            personaArray = response.body();
+                            listarIMC(personaArray);
+                            Log.d("Logs de Retrofit", "Respuesta con Retrofit, readAllPersona " + personaArray);
+                        }
+
+                        @Override
+                        public void onFailure(Call<ArrayList<Persona>> call, Throwable t) {
+                            Log.d("Logs de Retrofit", "Respuesta con Retrofit, ERROR ERROR callIMCAutenticacion");
+                        }
+                    });
+            }
         }
 
+    }
+
+    private void listarIMC(ArrayList<Persona> personaArray) {
         Gson gson = new Gson();
         String arrayStringPersonas = gson.toJson(personaArray);
+        String usuario = gson.toJson(this.usuario);
         Intent intent = new Intent(MainActivity.this, PersonListActivity.class);
-        intent.putExtra("ArrayListPersonas",arrayStringPersonas);
+        Bundle extras = new Bundle();
+        extras.putString("Personas",arrayStringPersonas);
+        extras.putString("Usuario",usuario);
+        intent.putExtras(extras);
         startActivity(intent);
-
     }
 
 
     private void validarCampos() {
 
-        if (editTextNombre.getText().toString().isEmpty()) {
-            Toast.makeText(this, "Escribir el nombre", Toast.LENGTH_SHORT).show();
-            editTextNombre.requestFocus();
+        if (editTextEmail.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Digite el correo", Toast.LENGTH_SHORT).show();
+            editTextEmail.requestFocus();
             return;
         }
-        if (editTextPeso.getText().toString().isEmpty()) {
-            Toast.makeText(this, "Escribir el peso", Toast.LENGTH_SHORT).show();
-            editTextPeso.requestFocus();
+        if (editTextPassword.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Digite la contraseña", Toast.LENGTH_SHORT).show();
+            editTextPassword.requestFocus();
             return;
         }
-        if (editTextEstatura.getText().toString().isEmpty()) {
-            Toast.makeText(this, "Escribir la estatura", Toast.LENGTH_SHORT).show();
-            editTextEstatura.requestFocus();
-            return;
-        }
-        if (editTextEdad.getText().toString().isEmpty()) {
-            Toast.makeText(this, "Escribir la edad", Toast.LENGTH_SHORT).show();
-            editTextEdad.requestFocus();
-            return;
-        }
-        if (!rdbHombre.isChecked() && !rdbMujer.isChecked()) {
-            Toast.makeText(this, "Seleccione el genero", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        calcularIMC();
-        calcularMetabolismoBalsal();
-        registrarDatos();
-    }
-
-    private void registrarDatos() {
-
-        String genero;
-
-        if (rdbHombre.isChecked()) {
-            genero = "Hombre";
-        } else {
-            genero = "Mujer";
-        }
-
-        Calendar calendar = Calendar.getInstance();
-        Date dateObj = calendar.getTime();
-
-        personaArray.add(new Persona(editTextNombre.getText().toString(),
-                Double.parseDouble(editTextPeso.getText().toString()),
-                Double.parseDouble(editTextEstatura.getText().toString()),
-                Integer.parseInt(editTextEdad.getText().toString()),
-                genero,
-                imc,
-                metabolismo_basal,
-                dateObj
-                ));
-
-        Toast.makeText(this, "Usuario registrado", Toast.LENGTH_SHORT).show();
-    }
-
-    private void calcularMetabolismoBalsal() {
-
-        double peso = Double.parseDouble(editTextPeso.getText().toString());
-        double estatura = Double.parseDouble(editTextEstatura.getText().toString());
-        int edad = Integer.parseInt(editTextEdad.getText().toString());
-
-        if (rdbHombre.isChecked()) {
-            metabolismo_basal = (10 * peso) + (6.25 * estatura * 100) - (5 * edad) + 5;
-        } else {
-            metabolismo_basal = (10 * peso) + (6.25 * estatura * 100) - (5 * edad) - 161;
-        }
-
-        mBTextVW.setVisibility(View.VISIBLE);
-        mBTextVW.setText("Metabolismo basal: " + metabolismo_basal);
-    }
-
-    private void calcularIMC() {
-
-        String tabla;
-        try {
-            double peso = Double.parseDouble(editTextPeso.getText().toString());
-            double estatura = Double.parseDouble(editTextEstatura.getText().toString());
-
-            imc = peso / (estatura * estatura);
-
-            if (imc < 18.5) {
-                tabla = "Bajo peso";
-            } else {
-                if (imc >= 18.5 && imc <= 24.9) {
-                    tabla = "Normal";
-                } else {
-                    if (imc >= 25.0 & imc <= 29.9) {
-                        tabla = "Sobrepeso";
-                    } else {
-                        tabla = "Obeso";
-                    }
-                }
-            }
-
-            imcTextVW.setVisibility(View.VISIBLE);
-            imcTextVW.setText("IMC: " + imc + " - " + tabla);
-
-        } catch (Exception e) {
-            Toast.makeText(this, R.string.ingrese_bien_los_valores, Toast.LENGTH_SHORT).show();
-        }
-
     }
 }

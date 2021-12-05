@@ -59,11 +59,4 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
-    <!--<ImageButton
-        android:id="@+id/btn_llamar_contacto"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_weight="1"
-        android:background="@drawable/ic_launcher_background"
-        android:src="@android:drawable/stat_sys_phone_call_forward" />-->
 </LinearLayout>

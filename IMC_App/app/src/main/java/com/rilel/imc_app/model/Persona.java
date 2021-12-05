@@ -1,22 +1,36 @@
 package com.rilel.imc_app.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 public class Persona {
-
+    @SerializedName("id")
+    private Long id;
+    @SerializedName("idRegistros")
+    private Long idRegistros;
+    @SerializedName("nombre")
     private String nombre;
+    @SerializedName("peso")
     private Double peso;
+    @SerializedName("estatura")
     private Double estatura;
+    @SerializedName("edad")
     private Integer edad;
+    @SerializedName("genero")
     private String genero;
+    @SerializedName("imc")
     private Double imc;
+    @SerializedName("metabolismoBasal")
     private Double metabolismoBasal;
-    private Date fechaRegistro;
+    @SerializedName("fechaRegistro")
+    private String fechaRegistro;
 
     public Persona() {
     }
 
-    public Persona(String nombre, Double peso, Double estatura, Integer edad, String genero, Double imc, Double metabolismoBasal, Date fechaRegistro) {
+    public Persona(Long idRegistros, String nombre, Double peso, Double estatura, Integer edad, String genero, Double imc, Double metabolismoBasal, String fechaRegistro) {
+        this.idRegistros = idRegistros;
         this.nombre = nombre;
         this.peso = peso;
         this.estatura = estatura;
@@ -25,6 +39,14 @@ public class Persona {
         this.imc = imc;
         this.metabolismoBasal = metabolismoBasal;
         this.fechaRegistro = fechaRegistro;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -83,11 +105,19 @@ public class Persona {
         this.metabolismoBasal = metabolismoBasal;
     }
 
-    public Date getFechaRegistro() {
+    public String getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(Date fechaRegistro) {
+    public void setFechaRegistro(String fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
+    }
+
+    public Long getIdRegistros() {
+        return idRegistros;
+    }
+
+    public void setIdRegistros(Long idRegistros) {
+        this.idRegistros = idRegistros;
     }
 }

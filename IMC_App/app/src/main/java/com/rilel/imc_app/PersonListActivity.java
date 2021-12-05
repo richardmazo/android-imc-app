@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.rilel.imc_app.adapter.PersonaAdapter;
 import com.rilel.imc_app.model.Persona;
+import com.rilel.imc_app.model.Usuario;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 public class PersonListActivity extends AppCompatActivity {
 
     ArrayList<Persona> personaArray;
+    Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +31,13 @@ public class PersonListActivity extends AppCompatActivity {
 
         Bundle bundle = this.getIntent().getExtras();
         Gson gson = new Gson();
-        String ArrayListPersonas = bundle.getString("ArrayListPersonas");
-        Type type = new TypeToken<ArrayList<Persona>>(){}.getType();
-        personaArray = gson.fromJson(ArrayListPersonas, type);
+        String ArrayListPersonas = bundle.getString("Personas");
+        String Usuario = bundle.getString("Usuario");
+        Type typePersona = new TypeToken<ArrayList<Persona>>(){}.getType();
+        Type typeUsuario = new TypeToken<Usuario>(){}.getType();
+        personaArray = gson.fromJson(ArrayListPersonas, typePersona);
+        usuario = gson.fromJson(Usuario, typeUsuario);
+
 
         PersonaAdapter personaAdapter = new PersonaAdapter(this, R.layout.persona_recycler_adapter, personaArray);
         RecyclerView recyclerViewPersonas = (RecyclerView) findViewById(R.id.lista_personas);
@@ -40,9 +46,16 @@ public class PersonListActivity extends AppCompatActivity {
         recyclerViewPersonas.setHasFixedSize(true);
 
         regresar.setOnClickListener(v -> {
-             Intent intent = new Intent(PersonListActivity.this, MainActivity.class);
+             /*Intent intent = new Intent(PersonListActivity.this, CrearIMC.class);
              startActivity(intent);
-             finish();
+             finish();*/
+            Gson gsonSend = new Gson();
+            String usuario = gsonSend.toJson(this.usuario);
+            Intent intent = new Intent(PersonListActivity.this, CrearIMC.class);
+            Bundle extras = new Bundle();
+            extras.putString("Usuario",usuario);
+            intent.putExtras(extras);
+            startActivity(intent);
         });
 
     }
