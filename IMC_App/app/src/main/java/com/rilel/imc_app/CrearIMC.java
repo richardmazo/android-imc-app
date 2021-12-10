@@ -227,11 +227,6 @@ public class CrearIMC extends AppCompatActivity {
                     personaArray = response.body();;
                     Log.d("Logs de Retrofit", "Respuesta con Retrofit, readPersonaRegistros " + personaArray);
                     listarIMC(personaArray);
-                    /*Gson gson = new Gson();
-                    String arrayStringPersonas = gson.toJson(personaArray);
-                    Intent intent = new Intent(CrearIMC.this, PersonListActivity.class);
-                    intent.putExtra("ArrayListPersonas",arrayStringPersonas);
-                    startActivity(intent);*/
 
                 }
 
@@ -249,11 +244,6 @@ public class CrearIMC extends AppCompatActivity {
                         personaArray = response.body();
                         listarIMC(personaArray);
                         Log.d("Logs de Retrofit", "Respuesta con Retrofit, readAllPersona " + personaArray);
-                        /*Gson gson = new Gson();
-                        String arrayStringPersonas = gson.toJson(personaArray);
-                        Intent intent = new Intent(CrearIMC.this, PersonListActivity.class);
-                        intent.putExtra("ArrayListPersonas",arrayStringPersonas);
-                        startActivity(intent);*/
                     }
 
                     @Override

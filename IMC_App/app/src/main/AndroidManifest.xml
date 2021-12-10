@@ -4,6 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="com.dev.cromer.jason.coverme.permission.MAPS_RECEIVE" />
 
     <application
         android:allowBackup="true"
@@ -13,6 +17,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IMC_App"
         android:usesCleartextTraffic="true">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key">
+        </meta-data>
+
+
+        <activity
+            android:name=".LocationActivity"
+            android:exported="false" />
         <activity
             android:name=".CrearIMC"
             android:exported="false" />

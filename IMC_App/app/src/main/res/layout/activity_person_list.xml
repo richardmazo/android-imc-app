@@ -16,12 +16,21 @@
         android:gravity="center|bottom"
         android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btnRegresar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Crear nuevo registro"
-        android:layout_gravity="center_horizontal|end"/>
+        <Button
+            android:id="@+id/btnCrearNuevoRegistro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lista_personas"
+            android:text="Crear nuevo registro"
+            android:layout_gravity="center_horizontal|end"/>
+
+        <Button
+            android:id="@+id/btnVerUbicaciones"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lista_personas"
+            android:text="Ver ubicaciones"
+            android:layout_gravity="center_horizontal|end"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -13,6 +13,9 @@ import com.google.gson.reflect.TypeToken;
 import com.rilel.imc_app.adapter.PersonaAdapter;
 import com.rilel.imc_app.model.Persona;
 import com.rilel.imc_app.model.Usuario;
+import com.rilel.imc_app.repository.LocationFirebase;
+import com.rilel.imc_app.repository.LocationFirebaseImpl;
+import com.rilel.imc_app.utils.Callback;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -27,7 +30,8 @@ public class PersonListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person_list);
 
-        Button regresar = (Button) findViewById(R.id.btnRegresar);
+        Button btnCrearNuevoRegistro = (Button) findViewById(R.id.btnCrearNuevoRegistro);
+        Button btnVerMapa = (Button) findViewById(R.id.btnVerUbicaciones);
 
         Bundle bundle = this.getIntent().getExtras();
         Gson gson = new Gson();
@@ -45,10 +49,17 @@ public class PersonListActivity extends AppCompatActivity {
         recyclerViewPersonas.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewPersonas.setHasFixedSize(true);
 
-        regresar.setOnClickListener(v -> {
-             /*Intent intent = new Intent(PersonListActivity.this, CrearIMC.class);
-             startActivity(intent);
-             finish();*/
+        btnVerMapa.setOnClickListener(v -> {
+            Gson gsonSend = new Gson();
+            String usuario = gsonSend.toJson(this.usuario);
+            Intent intent = new Intent(PersonListActivity.this, LocationActivity.class);
+            Bundle extras = new Bundle();
+            extras.putString("Usuario",usuario);
+            intent.putExtras(extras);
+            startActivity(intent);
+        });
+
+        btnCrearNuevoRegistro.setOnClickListener(v -> {
             Gson gsonSend = new Gson();
             String usuario = gsonSend.toJson(this.usuario);
             Intent intent = new Intent(PersonListActivity.this, CrearIMC.class);
@@ -57,6 +68,8 @@ public class PersonListActivity extends AppCompatActivity {
             intent.putExtras(extras);
             startActivity(intent);
         });
+
+
 
     }
 }

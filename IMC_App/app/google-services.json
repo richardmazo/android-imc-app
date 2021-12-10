@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "813162002747",
+    "project_id": "imc-app-rilel",
+    "storage_bucket": "imc-app-rilel.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:813162002747:android:a05f23d18af59425329f1e",
+        "android_client_info": {
+          "package_name": "com.rilel.imc_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "813162002747-ehg5182a43s1lo38n0mo2ggj9vl4bgfd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdzz5chEjRLTtcDxuvW7xtyaCQnP6QjBU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "813162002747-ehg5182a43s1lo38n0mo2ggj9vl4bgfd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

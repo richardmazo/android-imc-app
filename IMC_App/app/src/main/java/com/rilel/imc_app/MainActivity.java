@@ -1,22 +1,34 @@
 package com.rilel.imc_app;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.gson.Gson;
 import com.rilel.imc_app.model.Persona;
+import com.rilel.imc_app.model.Ubicacion;
 import com.rilel.imc_app.model.Usuario;
 import com.rilel.imc_app.network.IMCAPIClient;
 import com.rilel.imc_app.pojo.Autorizacion;
 import com.rilel.imc_app.repository.IMCRepository;
+import com.rilel.imc_app.repository.LocationFirebase;
+import com.rilel.imc_app.repository.LocationFirebaseImpl;
+import com.rilel.imc_app.utils.GpsUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,6 +43,15 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<Persona> personaArray;
     Usuario usuario;
+
+    LocationFirebase locationFirebase;
+    private FusedLocationProviderClient fusedLocationClient;
+
+    private static  final String[] LOCATION_PERMS ={
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+    };
+    private static final int LOCATION_REQUEST = 1337;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,14 +87,25 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Logs de Retrofit", "Respuesta con Retrofit, " + usuario.getAccess());
                 Autorizacion autorizacion = new Autorizacion();
                 autorizacion.setAccess(usuario.getAccess());
+                guardarUbicacion();
                 listar();
             }
 
             @Override
             public void onFailure(Call<Usuario> call, Throwable t) {
+                mensaje("Usuario o contraseña incorrecto");
                 Log.d("Logs de Retrofit", "Respuesta con Retrofit, ERROR ERROR ERROR");
             }
         });
+    }
+
+    private void mensaje(String mensaje) {
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+        try {
+            wait(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void listar() {
@@ -139,4 +171,71 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
     }
+
+    private void guardarUbicacion() {
+        locationFirebase = new LocationFirebaseImpl();
+        com.rilel.imc_app.utils.Callback callbackRegistroUbicacion = new com.rilel.imc_app.utils.Callback() {
+            @Override
+            public void OnSuccess(Object object) {
+
+            }
+
+            @Override
+            public void OnFailure(Object object) {
+
+            }
+        };
+
+        obtenerUbicacion(callbackRegistroUbicacion);
+    }
+
+    private void obtenerUbicacion(com.rilel.imc_app.utils.Callback callbackRegistroUbicacion) {
+
+        if(ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+
+            requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
+
+        }else{
+
+            (new GpsUtils(MainActivity.this)).turnGPSOn(new GpsUtils.onGpsListener(){
+                @Override
+                public void gpsStatus(boolean isGPSEnable){
+
+                }
+            });
+
+
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+            fusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            if(location != null){
+                                double latitude, longitude;
+                                latitude = location.getLatitude();
+                                longitude = location.getLongitude();
+                                //LatLng punto = new LatLng(location.getLatitude(), location.getLongitude());
+
+                                Calendar calendario = Calendar.getInstance();
+                                int hora, minutos, segundos;
+
+                                hora = calendario.get(Calendar.HOUR_OF_DAY);
+                                minutos = calendario.get(Calendar.MINUTE);
+                                segundos = calendario.get(Calendar.SECOND);
+
+
+
+                                Ubicacion ubicacion = new Ubicacion(usuario.getId(),latitude,longitude,hora + ":" + minutos + ":" + segundos);
+                                locationFirebase.crear(ubicacion, callbackRegistroUbicacion);
+
+                            }
+                        }
+                    });
+        }
+    }
+
 }
